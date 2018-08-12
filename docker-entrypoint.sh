@@ -1,5 +1,13 @@
 #!/bin/sh
 
+cat >> /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/config.properties << EOF
+db.driverClassName=org.postgresql.Driver
+db.url=jdbc:postgresql://${DB_HOST:-postgres}/${DB_NAME:-osm}
+db.username=${DB_USER}
+db.password=${DB_PASSWORD}
+srtmDataDirectory=${SRTM_DIRECTORY}
+EOF
+
 if [ -n "$DB_URL" ] ; then
     CATALINA_OPTS="${CATALINA_OPTS} -Ddb.url=${DB_URL}"
 fi
@@ -14,6 +22,10 @@ fi
 
 if [ -n "${SRTM_DIRECTORY}" ] ; then
     CATALINA_OPTS="${CATALINA_OPTS} -DsrtmDataDirectory=${SRTM_DIRECTORY}"
+fi
+
+if [ -n "${OSM_API_URL}" ] ; then
+    CATALINA_OPTS="${CATALINA_OPTS} '-Dosm.tools.api.get_relation_url=${OSM_API_URL}'"
 fi
 
 export CATALINA_OPTS

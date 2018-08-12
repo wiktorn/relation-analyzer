@@ -5,7 +5,7 @@ services:
   db:
     image: postgres:9-alpine
     volumes:
-       - relation_analyzer_db:/var/lib/mysql
+       - relation_analyzer_db:/var/lib/postgresql
     restart: always
     environment:
       POSTGRES_USER: ra
