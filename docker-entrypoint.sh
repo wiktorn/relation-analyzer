@@ -16,5 +16,9 @@ if [ -n "${SRTM_DIRECTORY}" ] ; then
     CATALINA_OPTS="${CATALINA_OPTS} -DsrtmDataDirectory=${SRTM_DIRECTORY}"
 fi
 
+if [ -n "${OSM_API_URL}" ] ; then
+    CATALINA_OPTS="${CATALINA_OPTS} '-Dosm.tools.api.get_relation_url=${OSM_API_URL}'"
+fi
+
 export CATALINA_OPTS
 exec catalina.sh run
